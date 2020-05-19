@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Connection con = null;
         String driver="com.mysql.cj.jdbc.Driver";
+        Statement stmt = null;
         PreparedStatement pstmt = null;
         try {
             Class.forName(driver);
@@ -23,8 +24,25 @@ public class Main {
                 System.out.println("Please type in the job type:");
                 Scanner sc = new Scanner(System.in);
                 job = sc.next();
+                String sql_stmt = "SELECT * FROM employee WHERE job=\"" + job + "\"";
+                stmt = con.createStatement();
+                ResultSet rs_stmt = stmt.executeQuery(sql_stmt);
+                System.out.println("Print the results from Statement:");
+                while (rs_stmt.next()){
+                    Employee e = new Employee();
+                    e.setEmpid(rs_stmt.getInt("empid"));
+                    e.setName(rs_stmt.getString("name"));
+                    e.setJob(rs_stmt.getString("job"));
+                    e.setManager(rs_stmt.getInt("manager"));
+                    e.setHiredate(rs_stmt.getDate("hiredate"));
+                    e.setSalary(rs_stmt.getDouble("salary"));
+                    e.setDepid(rs_stmt.getInt("deptid"));
+                    System.out.println(e);
+                }
+                System.out.println();
                 pstmt.setString(1, job);
                 ResultSet rs = pstmt.executeQuery();
+                System.out.println("Printing results from PreparedStatement:");
                 while (rs.next()){
                     Employee e = new Employee();
                     e.setEmpid(rs.getInt("empid"));
@@ -46,6 +64,7 @@ public class Main {
             System.out.println("Connection failed.");
         }finally{
             try{
+                if (stmt != null) stmt.close();
                 if(pstmt!=null) pstmt.close();
             }catch(SQLException se2){
             }// Do nothing
