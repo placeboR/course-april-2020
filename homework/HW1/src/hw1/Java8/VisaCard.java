@@ -7,7 +7,7 @@ public class VisaCard extends CreditCardField implements CreditCard {
     }
     @Override
     public boolean isCardAccepted(String cardType) {
-        if ("VisaCard".equals(cardType)){
+        if ("VisaCard".equalsIgnoreCase(cardType)){
             System.out.println("Accepted");
             return true;
         } else {

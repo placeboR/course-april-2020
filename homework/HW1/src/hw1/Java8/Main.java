@@ -39,15 +39,15 @@ public class Main {
         // Problem 3
         System.out.println();
         System.out.println("Problem 3: ");
-        String prob3 = new String("walabcwalexywalxzsfwalmx");
-        String prob3_ans = Arrays.asList(prob3.split("(?)wal"))
-                .stream().collect(Collectors.joining("sams"));
+        String prob3 = new String("walabcwalexywalxzsfwalmxwal");
+        String prob3_ans = Arrays.stream(prob3.split("(?)wal",-1))
+                .collect(Collectors.joining("sams"));
         System.out.println(prob3_ans);
 
         // Problem 4
         System.out.println();
         System.out.println("Problem 4:");
-        String prob4 = new String("Eclipse eclipse eclipse amc clip ECLIPSE");
+        String prob4 = new String("Eclipse eclipse Eclipse eclipse amc clip ECLIPSE");
         Map<String, Integer> prob4_ans = Arrays.asList(prob4.toLowerCase().split("(?) "))
                 .stream().collect(Collectors.groupingBy(o -> o , Collectors.summingInt(o -> 1)));
         prob4_ans.forEach((k, v) -> System.out.println(k + ": " + v));

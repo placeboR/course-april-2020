@@ -3,11 +3,10 @@ package org.hw2.DAO;
 import org.hw2.beans.Employee;
 import sun.util.calendar.BaseCalendar;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class EmployeeDAOSimple {
+public class EmployeeRepository {
     static List<Employee> employees;
     static {
         employees = new ArrayList<>();
@@ -17,7 +16,7 @@ public class EmployeeDAOSimple {
         return employees;
     }
     public Employee getEmployeeById(int id){
-        return employees.stream().filter(e -> id == e.getDepid()).findFirst().orElse(null);
+        return employees.stream().filter(e -> id == e.getEmpid()).findFirst().orElse(null);
     }
     public void updateEmployee(Employee temp){
         Employee target = employees.stream().filter(e -> e.getEmpid() == temp.getEmpid()).findFirst().orElse(null);
@@ -25,9 +24,28 @@ public class EmployeeDAOSimple {
             target = temp;
         }
     }
+    public void updateEmployee(int id, Employee temp){
+        Employee target = employees.stream().filter(e -> e.getEmpid() == id).findFirst().orElse(null);
+        if (target != null){
+            temp.setEmpid(id);
+            target = temp;
+        }
+    }
     public void newEmployee(Employee tmp){
-
-        int maxId = employees.stream().map(e -> e.getEmpid()).max();
-        tmp.setEmpid(maxId + 1);
+        Employee target = employees.stream().filter(e -> e.getEmpid() == tmp.getEmpid()).findFirst().orElse(null);
+        if (target != null){
+            return;
+        }
+        Optional<Integer> maxId = employees.stream().map(Employee::getEmpid).max(Integer::compareTo);
+        if (maxId.isPresent()){
+            tmp.setEmpid(maxId.get() + 1);
+        }
+        else {
+            tmp.setEmpid(1);
+        }
+        employees.add(tmp);
+    }
+    public void deleteEmployeeById(int id){
+        employees.removeIf(tmp -> id == tmp.getEmpid());
     }
 }

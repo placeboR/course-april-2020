@@ -8,6 +8,6 @@ public interface EmployeeDAO {
     List<Employee> findAllEmployee() throws Exception;
     Employee findByID(Integer empid) throws Exception;
     boolean doCreate(Employee e) throws Exception;
-    boolean doUpdate(Employee e) throws Exception;
+    boolean doUpdate(Integer empid, Employee e) throws Exception;
     boolean deleteByID(Integer empid) throws Exception;
 }

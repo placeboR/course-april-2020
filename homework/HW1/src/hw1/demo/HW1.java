@@ -37,12 +37,24 @@ public class HW1 {
         }
         res = res.substring(0, res.length() - 1);
         System.out.println(res);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : strList){
+            stringBuilder.append(s);
+            stringBuilder.append(" ");
+        }
+        System.out.println(stringBuilder.substring(0, stringBuilder.length()-1));
         System.out.println();
 //        Topic: final
         final double PI = 3.14;
         finalFun(); //Notice: Cannot make a static reference to the non-static method
         finalClass f = new finalClass();
         System.out.println(f.incID());
+        System.out.println(f.incID());
+
+//        immutable class
+        student s = new student(10);
+        System.out.println(s);
+        s = new student(20);
     }
 
     static final void finalFun(){
@@ -55,6 +67,8 @@ public class HW1 {
         }
     }
     public static boolean cmpStr(String a, String b){
+        if (a == null && b == null)return true;
+        if (a == null || b == null)return false;
         int sz_A = a.length();
         int sz_B = b.length();
         if(sz_A != sz_B)return false;

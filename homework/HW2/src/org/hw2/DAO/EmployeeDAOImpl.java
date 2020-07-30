@@ -68,16 +68,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean doUpdate(Employee e) throws Exception {
-        String sql = "UPDATE employee SET empid=?, name=?, job=?, manager=?, hiredate=?, salary=?, depid=?";
+    public boolean doUpdate(Integer empid, Employee e) throws Exception {
+        String sql = "UPDATE employee SET name=?, job=?, manager=?, hiredate=?, salary=?, depid=? WHERE empid=?";
         this.ps = this.conn.prepareStatement(sql);
-        this.ps.setInt(1, e.getEmpid());
-        this.ps.setString(2, e.getName());
-        this.ps.setString(3, e.getJob());
-        this.ps.setInt(4, e.getManager());
-        this.ps.setDate(5, (Date) e.getHiredate());
-        this.ps.setDouble(6, e.getSalary());
-        this.ps.setInt(7, e.getDepid());
+        this.ps.setString(1, e.getName());
+        this.ps.setString(2, e.getJob());
+        this.ps.setInt(3, e.getManager());
+        this.ps.setDate(4, (Date) e.getHiredate());
+        this.ps.setDouble(5, e.getSalary());
+        this.ps.setInt(6, e.getDepid());
+        this.ps.setInt(7, empid);
         return this.ps.executeUpdate() > 0;
     }
 

@@ -45,9 +45,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public boolean update(Employee e) throws Exception {
+    public boolean update(Integer empid, Employee e) throws Exception {
         try {
-            return DAOFactory.getEmployeeDAOImpl(this.conn).doUpdate(e);
+            return DAOFactory.getEmployeeDAOImpl(this.conn).doUpdate(empid, e);
         }catch(Exception exception) {
             throw exception;
         }finally {
